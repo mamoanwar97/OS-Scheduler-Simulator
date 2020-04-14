@@ -109,40 +109,6 @@ Window {
                 anchors.centerIn: parent
             }
         }
-
-        MouseArea {
-            anchors.fill: wait_btn
-            hoverEnabled: true
-            onEntered: wait_btn.opacity = 1;
-            onExited:  wait_btn.opacity =0.85;
-            onClicked: {average_waiting.text = "Average Waiting: " + Scheduler.averageCalc().toFixed(2);}
-        }
-
-        RectangularGlow {
-            anchors.fill: wait_btn
-            glowRadius: 10
-            spread: 0.2
-            color: "#a2e7ff"
-            cornerRadius: 20
-
-        }
-        Rectangle{
-            id: wait_btn
-            width: monitor.width * 0.15
-            height: 50 * 0.8
-            color: "#00394d"
-            radius: 10
-            anchors.bottom: monitor.top
-            anchors.right: average.left
-            anchors.rightMargin: 10
-            anchors.bottomMargin: 15
-            Text {
-                text: "Calc waiting"
-                font.pointSize: 12
-                color: "white"
-                anchors.centerIn: parent
-            }
-        }
         Switch {
             id: preemmtive_switch
             anchors.top: monitor.bottom
@@ -171,7 +137,8 @@ Window {
             height: 50 * 0.8
             color: "#111"
             anchors.right: monitor.right
-            anchors.verticalCenter: wait_btn.verticalCenter
+            anchors.bottom: monitor.top
+            anchors.bottomMargin: 15
             Text {
                 id: average_waiting
                 text: "Average Waiting: --"
@@ -588,12 +555,21 @@ Window {
 
     function start()
     {
+        Scheduler.outputclear();
         if (main.mode  === "Priority")
             Scheduler.startPriority(preemtive);
         else if (main.mode  === "FCFS")
             Scheduler.startFCFS();
         else if (main.mode  === "RoundRobin")
-            Scheduler.startRoundRobin();
+        {
+            if(timeSlice_input.text != "" )
+                Scheduler.startRoundRobin();
+            else
+            {
+                Scheduler.errorMsg("Enter time slice");
+                return;
+            }
+        }
         else if (main.mode  === "STF")
             Scheduler.startSTF( preemtive);
         else
@@ -609,6 +585,10 @@ Window {
         console.log("reset");
         current_process.text = "Current process: --"
         average_waiting.text = "Average Waiting: --"
+        timeSlice_input.text = ""
+        brust_input.text = ""
+        arrival_input.text = ""
+        priority_input.text = ""
         main.mode  = "none";
 
         Scheduler.clear();
