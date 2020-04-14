@@ -547,6 +547,26 @@ Window {
             Scheduler.errorMsg("Missing Process Priority");
             return;
         }
+        else if (!priority_input.text.match(/^\d{0,}(\.\d{0,2})?$/))
+        {
+            Scheduler.errorMsg("Remove letters in priority input");
+            return;
+        }
+        else if (!brust_input.text.match(/^\d{0,}(\.\d{0,2})?$/))
+        {
+            Scheduler.errorMsg("Remove letters in brust input");
+            return;
+        }
+        else if (!arrival_input.text.match(/^\d{0,}(\.\d{0,2})?$/))
+        {
+            Scheduler.errorMsg("Remove letters in arrival input");
+            return;
+        }
+        else if (!timeSlice_input.text.match(/^\d{0,}(\.\d{0,2})?$/))
+        {
+            Scheduler.errorMsg("Remove letters in time slice input");
+            return;
+        }
 
         var brust = parseFloat(brust_input.text );
         var arrival = parseFloat(arrival_input.text);
