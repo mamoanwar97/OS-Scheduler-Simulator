@@ -69,7 +69,7 @@ public:
     Q_INVOKABLE  void Priority(deque<process> input, bool preemptive);
     Q_INVOKABLE  void FCFS(deque<process> input);
     Q_INVOKABLE  void STF(deque<process> input,bool preemptive);
-    Q_INVOKABLE  float AWT(deque<process_out>out,deque<process> input,int n);
+      float AWT(deque<process_out>output,deque<process> Input,int n);
     Q_INVOKABLE   int noOfProcess(void);
     Q_INVOKABLE   float maxTime(void);
     Q_INVOKABLE   int processID(int i);

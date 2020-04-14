@@ -596,32 +596,32 @@ void Scheduler::STF(deque<process> input, bool preemptive)
         }
     }
 }
-float AWT(deque<process_out>out,deque<process> input,int n)
+float AWT(deque<process_out>output,deque<process> Input,int n)
 {
     set<int>IsRep;
     float WaitTime=0 ;
-    while(!out.empty())
+    while(!output.empty())
     {
-        int id = out.front().id;
+        int id = output.front().id;
         unsigned int l = IsRep.size();
         IsRep.insert(id);
         if(l==IsRep.size())
         {
-            out.pop_front();
+            output.pop_front();
         }
         else
         {
-            float arrive = arr_find(id,input);
-            float start = out.front().start;
-            float endp = start + out.front().time;
+            float arrive = arr_find(id,Input);
+            float start = output.front().start;
+            float endp = start + output.front().time;
             WaitTime += start - arrive ;
-            out.pop_front();
-            for(unsigned int j = 0 ; j<out.size() ; j++)
+            output.pop_front();
+            for(unsigned int j = 0 ; j<output.size() ; j++)
             {
-                if(out[j].id == id)
+                if(output[j].id == id)
                 {
-                    WaitTime += out[j].start - endp ;
-                    endp = out[j].start + out[j].time ;
+                    WaitTime += output[j].start - endp ;
+                    endp = output[j].start + output[j].time ;
                 }
             }
         }
