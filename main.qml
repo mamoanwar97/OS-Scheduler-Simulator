@@ -30,7 +30,7 @@ Window {
 
             Chart
             {
-
+                id:chart
             }
 
 //            Text {
@@ -432,7 +432,7 @@ Window {
         onExited:  stf_button.opacity =0.85;
         onClicked: {
             current_process.text = "Current process: STF";
-            monitor_text.text = ((preemtive)? "preemtive":"non preemtive");
+//            monitor_text.text = ((preemtive)? "preemtive":"non preemtive");
             main.mode  = "STF";
         }
     }
@@ -502,7 +502,6 @@ Window {
 
     function start()
     {
-
         if (main.mode  === "Priority")
             Scheduler.startPriority(preemtive);
         else if (main.mode  === "FCFS")
@@ -520,7 +519,11 @@ Window {
 
     function reset()
     {
+        console.log("reset");
+        current_process.text = "Current process: None"
         main.mode  = "none";
+
         Scheduler.clear();
+        chart.clear();
     }
 }

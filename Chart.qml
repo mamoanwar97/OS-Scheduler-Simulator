@@ -6,8 +6,16 @@ import QtQuick.Layouts 1.3
 Rectangle {
     anchors.fill: parent
     color: "#313131"
+    function clear()
+    {
+        root.clear();
+        root.totalTime =1;
+        root.numProcess = 1;
+    }
 
     Rectangle {
+        property var all_processes: []
+
         // color of grid background
         color: parent.color
         border.color: "white"
@@ -37,6 +45,15 @@ Rectangle {
 //            root.numProcess = 2;
         }
 
+        function clear()
+        {
+            for(var i =0 ; i< all_processes.length; i++)
+            {
+                all_processes[i].destroy();
+            }
+            all_processes = [];
+        }
+
         function addProcess(process,x,y,brust_time) {
             var component = Qt.createComponent("Process.qml");
             var proc = component.createObject(root,
@@ -46,6 +63,7 @@ Rectangle {
                                        name : process,
                                        time: brust_time
                                    });
+            all_processes.push(proc);
         }
 
         function drawProcesses(process_out) {
@@ -53,6 +71,12 @@ Rectangle {
 //                console.log("draw:",process_out[i].getID(),process_out[i].getTime(),process_out[i].getStart());
                 addProcess("P"+process_out[i].getID(),process_out[i].getStart(),process_out[i].getID(),process_out[i].getTime());
             }
+        }
+
+        function updateGrid()
+        {
+            root.totalTime = Scheduler.maxTime()+2;
+            root.numProcess= Scheduler.noOfProcess();
         }
 
 
@@ -102,8 +126,7 @@ Rectangle {
     Connections {
         target: Scheduler
         onSendProcesses : {
-            root.totalTime = Scheduler.maxTime()+2;
-            root.numProcess= Scheduler.noOfProcess();
+            root.updateGrid();
             console.log("received Processes: ", processes);
             var process_out = processes;
             root.drawProcesses(process_out);
