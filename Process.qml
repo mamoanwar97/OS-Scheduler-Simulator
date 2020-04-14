@@ -14,7 +14,7 @@ Rectangle {
     // style
     property string name: "P1"
     property string textColor: "white"
-    property string processColor: "darkCyan"
+    property string processColor: "#00adb5"
     // time
     property double time: 1
 

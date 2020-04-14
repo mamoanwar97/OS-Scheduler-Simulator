@@ -5,19 +5,24 @@ import QtQuick.Layouts 1.3
 
 Rectangle {
     anchors.fill: parent
+    color: "#313131"
 
     Rectangle {
-        border.color: "black"
-        color: "white"
+        // color of grid background
+        color: parent.color
+        border.color: "white"
+        property string gridColor: border.color
+        property string textColor: border.color
+
+
+
         id:root
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        width: parent.width -100
+        width: parent.width -50
         height: parent.height -50
         property  double totalTime: Scheduler.maxTime()+2;
         property  int numProcess: Scheduler.noOfProcess();
-        property string gridColor: "black"
-        property string textColor: "black"
 
         MouseArea {anchors.fill: parent ;onClicked:{
             var process_out = Scheduler.getProcessesQml();
@@ -37,7 +42,6 @@ Rectangle {
             var component = Qt.createComponent("Process.qml");
             var proc = component.createObject(root,
                                    {
-                                       processColor:"red",
                                        grid_x:x,
                                        grid_y:y,
                                        name : process,

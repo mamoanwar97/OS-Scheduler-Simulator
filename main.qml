@@ -22,8 +22,8 @@ Window {
 
         Rectangle{
             id: monitor
-            width: centerRectangle.width * 0.75
-            height: centerRectangle.height * 0.8
+            width: centerRectangle.width * 0.83
+            height: centerRectangle.height * 0.80
             color: "#888"
             anchors.centerIn: centerRectangle
 
