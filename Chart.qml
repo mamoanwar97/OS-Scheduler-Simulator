@@ -36,12 +36,12 @@ Rectangle {
                                        name : process,
                                        time: brust_time
                                    });
-            console.log("process_created id:",x);
+//            console.log("process_created id:",x);
         }
 
         function drawProcesses(process_out) {
             for( var i = 0 ; i < process_out.length; i++) {
-                console.log(process_out[i].getID(),process_out[i].getTime(),process_out[i].getStart());
+                console.log("draw:",process_out[i].getID(),process_out[i].getTime(),process_out[i].getStart());
                 addProcess("P"+process_out[i].getID(),process_out[i].getStart(),process_out[i].getID(),process_out[i].getTime());
             }
         }
@@ -98,8 +98,11 @@ Rectangle {
     Connections {
         target: Scheduler
         onSendProcesses : {
+            root.totalTime = Scheduler.maxTime()+2;
+            root.numProcess= Scheduler.noOfProcess();
             console.log("received Processes: ", processes);
-            root.drawProcesses(processes);
+            var process_out = processes;
+            root.drawProcesses(process_out);
         }
     }
 }
