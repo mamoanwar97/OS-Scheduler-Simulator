@@ -69,14 +69,14 @@ public:
     Q_INVOKABLE  void Priority(deque<process> input, bool preemptive);
     Q_INVOKABLE  void FCFS(deque<process> input);
     Q_INVOKABLE  void STF(deque<process> input,bool preemptive);
-      float AWT(deque<process_out>output,deque<process> Input,int n);
+    Q_INVOKABLE float averageWaitingTime();
     Q_INVOKABLE   int noOfProcess(void);
     Q_INVOKABLE   float maxTime(void);
     Q_INVOKABLE   int processID(int i);
     Q_INVOKABLE QVariant getProcessesQml();
 
     //
-    Q_INVOKABLE void addProcess(float brust , float arrival , unsigned int Priority=0);
+    Q_INVOKABLE void addProcess(float brust , float arrival , unsigned int Priority=0,unsigned int timeslice=1);
     Q_INVOKABLE void startSTF(bool);
     Q_INVOKABLE void startPriority(bool);
     Q_INVOKABLE void startRoundRobin();

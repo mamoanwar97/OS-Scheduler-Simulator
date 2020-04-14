@@ -135,9 +135,10 @@ QVariant Scheduler::getProcessesQml()
     //    emit ray2Changed(x);
 }
 
-void Scheduler::addProcess(float brust , float arrival , unsigned int Priority)
+void Scheduler::addProcess(float brust , float arrival , unsigned int Priority,unsigned int timeslice)
 {
     process x(brust,arrival,Priority);
+    timeSlice=timeslice;
     this->Input.push_back(x);
 
     for(int i =0 ; i < this->Input.size(); i++)
@@ -596,7 +597,7 @@ void Scheduler::STF(deque<process> input, bool preemptive)
         }
     }
 }
-float AWT(deque<process_out>output,deque<process> Input,int n)
+float Scheduler::averageWaitingTime()
 {
     set<int>IsRep;
     float WaitTime=0 ;
@@ -626,5 +627,5 @@ float AWT(deque<process_out>output,deque<process> Input,int n)
             }
         }
     }
-    return WaitTime/n;
+    return WaitTime;
 }

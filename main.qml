@@ -139,7 +139,7 @@ Window {
             anchors.topMargin: 15
             Text {
                 id: average_waiting
-                text: "Average Waiting: 0"
+                text: "Average Waiting: " + Scheduler.averageWaitingTime()
                 font.pointSize: 15
                 color: "white"
                 anchors.centerIn: parent
@@ -262,11 +262,11 @@ Window {
         height: fcfs_button.height
         color: fcfs_button.color
         radius: fcfs_button.radius
-        anchors.verticalCenter: inputs_rect.bottom
+        anchors.verticalCenter: inputs_rect.verticalCenter
         anchors.horizontalCenter: inputs_rect.horizontalCenter
         opacity: 0.85
         Text {
-            text: "Add\nprocess"
+            text: "  Add\nprocess"
             anchors.centerIn: parent
             font.pointSize: 10
             color: "white"
@@ -283,9 +283,10 @@ Window {
     }
     TextField {
         id: priority_input
+        enabled: isPriority()
         width: fcfs_button.width
         height: 50
-        placeholderText: "Priority\n(Optional)"
+        placeholderText: "Priority"
         anchors.horizontalCenter: inputs_rect.right
         anchors.verticalCenter: inputs_rect.verticalCenter
         font.pointSize: 8
@@ -304,6 +305,24 @@ Window {
         placeholderText: "Brust time"
         anchors.horizontalCenter: inputs_rect.left
         anchors.verticalCenter: inputs_rect.verticalCenter
+        font.pointSize: 8
+        height: 50
+    }
+    RectangularGlow {
+        anchors.fill: timeSlice_input
+        glowRadius: input_effect.glowRadius
+        spread: input_effect.spread
+        color: input_effect.color
+        cornerRadius: input_effect.cornerRadius
+
+    }
+    TextField {
+        id: timeSlice_input
+        enabled:isRr()
+        width: fcfs_button.width
+        placeholderText: "Time Slice"
+        anchors.horizontalCenter: inputs_rect.horizontalCenter
+        anchors.verticalCenter: inputs_rect.bottom
         font.pointSize: 8
         height: 50
     }
@@ -497,7 +516,8 @@ Window {
         var brust = parseFloat(brust_input.text );
         var arrival = parseFloat(arrival_input.text);
         var priority = parseFloat(priority_input.text);
-        Scheduler.addProcess(brust,arrival,priority);
+        var timeSlice = parseFloat(timeSlice_input.text);
+        Scheduler.addProcess(brust,arrival,priority,timeSlice);
     }
 
     function start()
@@ -525,5 +545,13 @@ Window {
 
         Scheduler.clear();
         chart.clear();
+    }
+    function isRr()
+    {
+        return main.mode  == "RoundRobin"
+    }
+    function isPriority()
+    {
+        return main.mode  == "Priority"
     }
 }
