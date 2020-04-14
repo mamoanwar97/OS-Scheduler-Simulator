@@ -82,6 +82,7 @@ public:
     Q_INVOKABLE void startRoundRobin();
     Q_INVOKABLE void startFCFS();
     Q_INVOKABLE float averageCalc();
+    Q_INVOKABLE void clearOutput();
     Q_INVOKABLE void clear();
     Q_INVOKABLE void errorMsg(QString e);
 

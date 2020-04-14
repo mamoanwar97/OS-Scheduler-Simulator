@@ -180,8 +180,13 @@ void Scheduler::clear()
     this->Input.clear();
     this->output.clear();
 }
+void Scheduler::clearOutput()
+{
+    this->output.clear();
+}
 float Scheduler::averageCalc()
 {
+
     //cout << this->output.size() << endl;
     float x = this->averageWaitingTime(this->Input , this->output);
     //cout << "Average : " << x << endl;
@@ -210,8 +215,6 @@ void Scheduler::sendQml()
 
     // clear all
     process::id_creator = 0;
-    this->clear();
-
 }
 
 //process_out Scheduler::getProcess(int i)

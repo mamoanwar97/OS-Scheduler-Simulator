@@ -561,6 +561,7 @@ Window {
 
     function start()
     {
+        Scheduler.clearOutput();
         if (main.mode  === "Priority")
             Scheduler.startPriority(preemtive);
         else if (main.mode  === "FCFS")
