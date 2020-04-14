@@ -180,7 +180,12 @@ void Scheduler::clear()
     this->Input.clear();
     this->output.clear();
 }
-
+float Scheduler::averageCalc()
+{
+    float x = this->averageWaitingTime(this->Input , this->output);
+    cout << "Average : " << x << endl;
+    return x;
+}
 void Scheduler::errorMsg(QString e)
 {
     this->error->setText(e);
@@ -597,7 +602,7 @@ void Scheduler::STF(deque<process> input, bool preemptive)
         }
     }
 }
-float Scheduler::averageWaitingTime()
+float Scheduler::averageWaitingTime(deque<process> input, deque<process_out> output)
 {
     set<int>IsRep;
     float WaitTime=0 ;

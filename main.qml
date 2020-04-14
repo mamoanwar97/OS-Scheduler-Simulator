@@ -115,7 +115,7 @@ Window {
             hoverEnabled: true
             onEntered: wait_btn.opacity = 1;
             onExited:  wait_btn.opacity =0.85;
-            onClicked: {average_waiting.text = "Average Waiting: " + Scheduler.averageWaitingTime();}
+            onClicked: {average_waiting.text = "Average Waiting: " + Scheduler.averageCalc();}
         }
 
         RectangularGlow {
