@@ -8,7 +8,7 @@ Window {
     id : main
     visible: true
     width: 1800
-    height: 1000
+    height: 850
     color: "transparent"
     property real preemtive: 0
     property string mode: "none"
@@ -16,7 +16,7 @@ Window {
     Rectangle {
         id: centerRectangle
         width: parent.width * 0.6
-        height: parent.height * 0.8
+        height: parent.height * 0.94
         color: "#111"
         anchors.centerIn: parent
         radius: 20
@@ -54,7 +54,7 @@ Window {
         }
         Rectangle{
             id: start_btn
-            width: monitor.width * 0.2
+            width: monitor.width * 0.15
             height: 50 * 0.8
             color: "#0c2806"
             anchors.bottom: monitor.top
@@ -94,12 +94,13 @@ Window {
         }
         Rectangle{
             id: reset_btn
-            width: monitor.width * 0.2
+            width: monitor.width * 0.15
             height: 50 * 0.8
             color: "#550222"
             radius: 10
             anchors.bottom: monitor.top
-            anchors.right: monitor.right
+            anchors.left: start_btn.right
+            anchors.leftMargin: 20
             anchors.bottomMargin: 15
             Text {
                 text: "RESET"
@@ -108,11 +109,45 @@ Window {
                 anchors.centerIn: parent
             }
         }
+
+        MouseArea {
+            anchors.fill: wait_btn
+            hoverEnabled: true
+            onEntered: wait_btn.opacity = 1;
+            onExited:  wait_btn.opacity =0.85;
+            onClicked: {average_waiting.text = "Average Waiting: " + Scheduler.averageWaitingTime();}
+        }
+
+        RectangularGlow {
+            anchors.fill: wait_btn
+            glowRadius: 10
+            spread: 0.2
+            color: "#a2e7ff"
+            cornerRadius: 20
+
+        }
+        Rectangle{
+            id: wait_btn
+            width: monitor.width * 0.15
+            height: 50 * 0.8
+            color: "#00394d"
+            radius: 10
+            anchors.bottom: monitor.top
+            anchors.right: average.left
+            anchors.rightMargin: 10
+            anchors.bottomMargin: 15
+            Text {
+                text: "Calc waiting"
+                font.pointSize: 12
+                color: "white"
+                anchors.centerIn: parent
+            }
+        }
         Switch {
             id: preemmtive_switch
-            anchors.bottom: monitor.top
-            anchors.bottomMargin: 10
-            anchors.right: monitor.horizontalCenter
+            anchors.top: monitor.bottom
+            anchors.topMargin: 15
+            anchors.left: monitor.left
             onClicked: {
                 if(preemmtive_switch.checked)
                     preemtive = 1
@@ -121,6 +156,7 @@ Window {
             }
         }
         Text{
+            id: preemtive_txt
             text: "Preemtive"
             color: "#fff"
             anchors.left: preemmtive_switch.right
@@ -130,16 +166,15 @@ Window {
         }
 
         Rectangle{
-            id: preemmtive_box
+            id: average
             width: monitor.width * 0.3
             height: 50 * 0.8
             color: "#111"
-            anchors.top: monitor.bottom
-            anchors.left: monitor.left
-            anchors.topMargin: 15
+            anchors.right: monitor.right
+            anchors.verticalCenter: wait_btn.verticalCenter
             Text {
                 id: average_waiting
-                text: "Average Waiting: " + Scheduler.averageWaitingTime()
+                text: "Average Waiting: --"
                 font.pointSize: 15
                 color: "white"
                 anchors.centerIn: parent
@@ -155,7 +190,7 @@ Window {
             anchors.topMargin: 15
             Text {
                 id: group_no
-                text: "Group xx"
+                text: "Group 39"
                 font.pointSize: 20
                 color: "white"
                 anchors.centerIn: parent
@@ -171,7 +206,7 @@ Window {
             anchors.topMargin: 15
             Text {
                 id: current_process
-                text: "Current process: None"
+                text: "Current process: --"
                 font.pointSize: 15
                 color: "white"
                 anchors.centerIn: parent
@@ -181,8 +216,8 @@ Window {
 
     Rectangle {
         id: leftRectangle
-        width: parent.width * 0.1
-        height: parent.height * 0.6
+        width: centerRectangle.width * 0.175
+        height: centerRectangle.height * 0.75
         color: "#111"
         anchors.right: centerRectangle.left
         anchors.verticalCenter: centerRectangle.verticalCenter
@@ -190,8 +225,8 @@ Window {
 
     Rectangle {
         id: rightRectangle
-        width: parent.width * 0.1
-        height: parent.height * 0.6
+        width: centerRectangle.width * 0.175
+        height: centerRectangle.height * 0.75
         color: "#111"
         anchors.left: centerRectangle.right
         anchors.verticalCenter: centerRectangle.verticalCenter
@@ -518,6 +553,10 @@ Window {
         var priority = parseFloat(priority_input.text);
         var timeSlice = parseFloat(timeSlice_input.text);
         Scheduler.addProcess(brust,arrival,priority,timeSlice);
+        brust_input.text = ""
+        arrival_input.text = ""
+        priority_input.text = ""
+        timeSlice_input.text = ""
     }
 
     function start()
@@ -540,7 +579,8 @@ Window {
     function reset()
     {
         console.log("reset");
-        current_process.text = "Current process: None"
+        current_process.text = "Current process: --"
+        average_waiting.text = "Average Waiting: --"
         main.mode  = "none";
 
         Scheduler.clear();
