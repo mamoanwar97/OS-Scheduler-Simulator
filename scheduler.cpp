@@ -637,5 +637,5 @@ float Scheduler::averageWaitingTime(deque<process> Input, deque<process_out> out
             }
         }
     }
-    return WaitTime;
+    return WaitTime/Input.size();
 }
