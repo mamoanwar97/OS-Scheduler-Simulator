@@ -115,7 +115,7 @@ Window {
             hoverEnabled: true
             onEntered: wait_btn.opacity = 1;
             onExited:  wait_btn.opacity =0.85;
-            onClicked: {average_waiting.text = "Average Waiting: " + Scheduler.averageCalc();}
+            onClicked: {average_waiting.text = "Average Waiting: " + Scheduler.averageCalc().toFixed(2);}
         }
 
         RectangularGlow {
@@ -532,6 +532,9 @@ Window {
         onExited:  add_process_btn.opacity =0.85;
         onClicked: {
             main.addProcess();
+            chart.clear();
+            Scheduler.outputclear();
+            main.start();
         }
     }
 
@@ -548,25 +551,30 @@ Window {
             return;
         }
         else if (!priority_input.text.match(/^\d{0,}(\.\d{0,2})?$/))
-        {
-            Scheduler.errorMsg("Remove letters in priority input");
-            return;
-        }
+                {
+                    Scheduler.errorMsg("Remove letters in priority input");
+                    return;
+                }
         else if (!brust_input.text.match(/^\d{0,}(\.\d{0,2})?$/))
-        {
-            Scheduler.errorMsg("Remove letters in brust input");
-            return;
-        }
+                {
+                    Scheduler.errorMsg("Remove letters in brust input");
+                    return;
+                }
         else if (!arrival_input.text.match(/^\d{0,}(\.\d{0,2})?$/))
-        {
-            Scheduler.errorMsg("Remove letters in arrival input");
-            return;
-        }
+                {
+                    Scheduler.errorMsg("Remove letters in arrival input");
+                    return;
+                }
         else if (!timeSlice_input.text.match(/^\d{0,}(\.\d{0,2})?$/))
-        {
-            Scheduler.errorMsg("Remove letters in time slice input");
-            return;
-        }
+                {
+                    Scheduler.errorMsg("Remove letters in time slice input");
+                    return;
+                }
+        else if (timeSlice_input.text.match(/0/))
+                {
+                    Scheduler.errorMsg("time slice must be more than 0");
+                    return;
+                }
 
         var brust = parseFloat(brust_input.text );
         var arrival = parseFloat(arrival_input.text);
@@ -576,12 +584,10 @@ Window {
         brust_input.text = ""
         arrival_input.text = ""
         priority_input.text = ""
-        timeSlice_input.text = ""
     }
 
     function start()
     {
-        Scheduler.clearOutput();
         if (main.mode  === "Priority")
             Scheduler.startPriority(preemtive);
         else if (main.mode  === "FCFS")
@@ -595,6 +601,7 @@ Window {
             Scheduler.errorMsg("Select the Mode");
             console.log("Node Mode");
         }
+       average_waiting.text = "Average Waiting: " + Scheduler.averageCalc().toFixed(2);
     }
 
     function reset()

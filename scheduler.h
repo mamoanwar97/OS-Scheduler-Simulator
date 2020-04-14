@@ -10,7 +10,7 @@ class process
 {
 public:
     static int id_creator;
-    int id;
+    int id=0;
     float brust_time ;
     float arrival_time ;
     float start_time ;
@@ -70,6 +70,7 @@ public:
     Q_INVOKABLE  void FCFS(deque<process> input);
     Q_INVOKABLE  void STF(deque<process> input,bool preemptive);
     Q_INVOKABLE float averageWaitingTime(deque<process> input, deque<process_out> output);
+    Q_INVOKABLE float averageCalc();
     Q_INVOKABLE   int noOfProcess(void);
     Q_INVOKABLE   float maxTime(void);
     Q_INVOKABLE   int processID(int i);
@@ -81,9 +82,9 @@ public:
     Q_INVOKABLE void startPriority(bool);
     Q_INVOKABLE void startRoundRobin();
     Q_INVOKABLE void startFCFS();
-    Q_INVOKABLE float averageCalc();
-    Q_INVOKABLE void clearOutput();
+
     Q_INVOKABLE void clear();
+    Q_INVOKABLE void outputclear();
     Q_INVOKABLE void errorMsg(QString e);
 
 private:

@@ -87,7 +87,7 @@ Rectangle {
             columns: root.totalTime
             spacing: root.width/ root.totalTime -1
             Repeater {
-                model: root.totalTime;
+                model: root.totalTime+2;
                 Rectangle {
                     Text {
                         anchors.top: parent.bottom

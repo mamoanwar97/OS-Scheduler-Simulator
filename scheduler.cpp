@@ -1,3 +1,4 @@
+
 #include "scheduler.h"
 
 int process ::id_creator = 0;
@@ -62,7 +63,7 @@ Scheduler::Scheduler()
 //    y.priority=2;
 //    x.push_back(y);
 ////    y.id=7;
-//    y.brust_time=6 ;
+//   y.brust_time=6 ;
 //    y.arrival_time=12;
 //    y.priority=0;
 //    x.push_back(y);
@@ -104,7 +105,7 @@ float Scheduler::maxTime(void)
     float first=output[0].start;
     for(int i=0;i<output.size();i++)
     {
-        t+=output[i].time;  
+        t+=output[i].time;
 
     }
     return (t+first);
@@ -177,16 +178,16 @@ void Scheduler::startFCFS()
 
 void Scheduler::clear()
 {
+    process::id_creator = 0;
     this->Input.clear();
     this->output.clear();
 }
-void Scheduler::clearOutput()
+void Scheduler::outputclear()
 {
     this->output.clear();
 }
 float Scheduler::averageCalc()
 {
-
     //cout << this->output.size() << endl;
     float x = this->averageWaitingTime(this->Input , this->output);
     //cout << "Average : " << x << endl;
@@ -214,7 +215,9 @@ void Scheduler::sendQml()
     emit sendProcesses(x);
 
     // clear all
-    process::id_creator = 0;
+    //process::id_creator = 0;
+   // this->clear();
+
 }
 
 //process_out Scheduler::getProcess(int i)
@@ -637,5 +640,6 @@ float Scheduler::averageWaitingTime(deque<process> Input, deque<process_out> out
             }
         }
     }
-    return WaitTime/Input.size();
+    return WaitTime/IsRep.size();
 }
+
