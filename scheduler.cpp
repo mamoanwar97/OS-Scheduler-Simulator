@@ -15,14 +15,14 @@ Scheduler::Scheduler()
     3 2 5
     */
 
-    process y(5,0.9,5);
-    process y2(2,2,4);
-    process y3(10,10,0);
-    process y4(3,15,3);
-    x.push_back(y);
-    x.push_back(y2);
-    x.push_back(y3);
-    x.push_back(y4);
+//    process y(5,0.9,5);
+//    process y2(2,2,4);
+//    process y3(10,10,0);
+//    process y4(3,15,3);
+//    x.push_back(y);
+//    x.push_back(y2);
+//    x.push_back(y3);
+//    x.push_back(y4);
 
 
 //    y.id=0;
@@ -83,6 +83,9 @@ Scheduler::Scheduler()
 //    this->RoundRobin(x);
     for(unsigned int i =0 ; i < this->output.size() ; i++)
         cout << "output " << this->output[i].id << "," << this->output[i].time << endl;
+
+
+    process::id_creator =0;
 
 }
 int Scheduler::noOfProcess(void)
@@ -190,6 +193,10 @@ void Scheduler::sendQml()
 
     QVariant x = QVariant::fromValue(list);
     emit sendProcesses(x);
+
+    // clear all
+    process::id_creator = 0;
+    this->clear();
 
 }
 

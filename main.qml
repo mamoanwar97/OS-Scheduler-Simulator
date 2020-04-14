@@ -27,7 +27,8 @@ Window {
             color: "#888"
             anchors.centerIn: centerRectangle
 
-            Chart{
+            Chart
+            {
 
             }
 

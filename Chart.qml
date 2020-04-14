@@ -25,10 +25,17 @@ Rectangle {
             }
         }
 
+        Component.onCompleted: {
+//            addProcess(0,3,0,3);
+//            addProcess(1,2,2,4);
+//            addProcess(3,1,1,1);
+//            root.totalTime = 10;
+//            root.numProcess = 2;
+        }
 
         function addProcess(process,x,y,brust_time) {
             var component = Qt.createComponent("Process.qml");
-            component.createObject(root,
+            var proc = component.createObject(root,
                                    {
                                        processColor:"red",
                                        grid_x:x,
@@ -36,21 +43,15 @@ Rectangle {
                                        name : process,
                                        time: brust_time
                                    });
-//            console.log("process_created id:",x);
         }
 
         function drawProcesses(process_out) {
             for( var i = 0 ; i < process_out.length; i++) {
-                console.log("draw:",process_out[i].getID(),process_out[i].getTime(),process_out[i].getStart());
+//                console.log("draw:",process_out[i].getID(),process_out[i].getTime(),process_out[i].getStart());
                 addProcess("P"+process_out[i].getID(),process_out[i].getStart(),process_out[i].getID(),process_out[i].getTime());
             }
         }
 
-        Component.onCompleted: {
-//            addProcess(0,3,0,3);
-//            addProcess(1,2,2,4);
-//            addProcess(3,1,1,1);
-        }
 
 
         Grid{
