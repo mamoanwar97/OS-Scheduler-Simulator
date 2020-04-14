@@ -4,6 +4,7 @@ int process ::id_creator = 0;
 
 Scheduler::Scheduler()
 {
+    this->error = new QMessageBox();
     deque<process> x;
     timeSlice=1;
     // id , time , start
@@ -177,6 +178,12 @@ void Scheduler::clear()
 {
     this->Input.clear();
     this->output.clear();
+}
+
+void Scheduler::errorMsg(QString e)
+{
+    this->error->setText(e);
+    this->error->show();
 }
 
 void Scheduler::sendQml()

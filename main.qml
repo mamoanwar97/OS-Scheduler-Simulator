@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
+import QtQuick.Dialogs 1.1
 
 Window {
     id : main
@@ -32,13 +33,13 @@ Window {
 
             }
 
-            Text {
-                id: monitor_text
-                text: "View"
-                anchors.centerIn: parent
-                font.pointSize: 10
-                color: "white"
-            }
+//            Text {
+//                id: monitor_text
+//                text: "View"
+//                anchors.centerIn: parent
+//                font.pointSize: 10
+//                color: "white"
+//            }
         }
 
 
@@ -170,7 +171,7 @@ Window {
             anchors.topMargin: 15
             Text {
                 id: current_process
-                text: "Current process: FCFS"
+                text: "Current process: None"
                 font.pointSize: 15
                 color: "white"
                 anchors.centerIn: parent
@@ -215,6 +216,7 @@ Window {
         anchors.verticalCenter:   leftRectangle.verticalCenter
         anchors.horizontalCenter: leftRectangle.left
     }
+
     Rectangle
     {
         id: inputs_rect
@@ -245,12 +247,13 @@ Window {
         height: 50
     }
     RectangularGlow {
+        id : add_process_btn_style
         anchors.fill: add_process_btn
         glowRadius: circle_effect.glowRadius
         spread: circle_effect.spread
         color: circle_effect.color
         cornerRadius: circle_effect.cornerRadius
-
+        opacity: 0.85
     }
     Rectangle
     {
@@ -261,6 +264,7 @@ Window {
         radius: fcfs_button.radius
         anchors.verticalCenter: inputs_rect.bottom
         anchors.horizontalCenter: inputs_rect.horizontalCenter
+        opacity: 0.85
         Text {
             text: "Add\nprocess"
             anchors.centerIn: parent
@@ -469,14 +473,27 @@ Window {
     }
     MouseArea {
         anchors.fill: add_process_btn
+        hoverEnabled: true
+        onEntered: add_process_btn.opacity = 1;
+        onExited:  add_process_btn.opacity =0.85;
         onClicked: {
-//            monitor_text.text = arrival_input.text + "  " + brust_input.text + " " + priority_input.text
             main.addProcess();
         }
     }
 
     function addProcess()
     {
+        if(brust_input.text === "" || arrival_input.text === "")
+        {
+            Scheduler.errorMsg("Missing Process Data");
+            return;
+        }
+        else if (priority_input.text=== "" && main.mode === "Priority")
+        {
+            Scheduler.errorMsg("Missing Process Priority");
+            return;
+        }
+
         var brust = parseFloat(brust_input.text );
         var arrival = parseFloat(arrival_input.text);
         var priority = parseFloat(priority_input.text);
@@ -495,11 +512,15 @@ Window {
         else if (main.mode  === "STF")
             Scheduler.startSTF( preemtive);
         else
+        {
+            Scheduler.errorMsg("Select the Mode");
             console.log("Node Mode");
+        }
     }
+
     function reset()
     {
         main.mode  = "none";
-        Scheduler
+        Scheduler.clear();
     }
 }

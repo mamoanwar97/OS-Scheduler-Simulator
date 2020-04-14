@@ -15,7 +15,6 @@ Rectangle {
         property string textColor: border.color
 
 
-
         id:root
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter

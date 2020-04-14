@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 #include<QObject>
 #include <QVariant>
+#include <QMessageBox>
 using namespace std;
 
 class process
@@ -57,6 +58,8 @@ private:
     deque<process_out> output;
     unsigned int timeSlice;
 
+    QMessageBox* error;
+
 signals :
     void sendProcesses(QVariant processes);
 public:
@@ -79,6 +82,7 @@ public:
     Q_INVOKABLE void startFCFS();
 
     Q_INVOKABLE void clear();
+    Q_INVOKABLE void errorMsg(QString e);
 
 private:
     void sendQml();
